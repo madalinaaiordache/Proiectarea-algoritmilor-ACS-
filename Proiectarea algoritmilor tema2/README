@@ -1,0 +1,55 @@
+IORDACHE Madalina Gabriela 323CA
+
+1. Curatare(Parcurgere in latime, Backtracking)
+Problema necesita determinarea unei ordini in care trebuie curatate
+zonele murdare cat si o asociere pentru fiecare zona a unui robot. 
+Fiindca numarul de zone murdare si numarul de roboti este mic 
+(cel mult 4) putem genera toate configuratiile posibile folosind 
+backtracking. Pentru a calcula costul unei configuratii vom precalcula
+distanta minima de la fiecare zona murdara la orice pozitie libera 
+din matrice folosind o parcurgere in latime. 
+Complexitate finala: O(N * M * |S| + |S|! * |R|^|S| * (|S| + |R|)).
+
+
+2. Fortificatii(Dijkstra, Cautare binara)
+
+Fie y indicele unui nod al unei asezari barbare. Numim granita a
+lui y multimea de valori d(x) + c(x, y), unde d(x) reprezinta distanta
+minima de la capitala la un nod x nebarbar si c(x,y) este costul muchiei 
+de la x la y. Pentru a calcula distanta minima vom folosi algoritmul 
+lui Dijkstra. Construim granita pentru fiecare nod barbar. Problema se 
+reduce la a maximiza valoarea minima din multimea granitelor tinand cont 
+ca operatia pe care o putem face este sa incrementam orice element din 
+multimea granitelor (avem la dispozitie K operatii). Vom cauta binar 
+valoarea minima maxima(sa o notam cu x) si vom verifica daca putem 
+aduce orice element din multimea granitelor la o valoare >= x cu cel 
+mult K operatii. 
+Complexitate finala: O(M * log(N) + M * log(M) + M * log(K)).
+
+
+
+3. Beamdrone(0-1 BFS)
+
+Vom construi un graf orientat in care nodurile reprezinta starile posibile 
+ale unei drone. Prin starea unei drone intelegem pozitia sa in matrice si 
+directia de zbor (vertical / orizontal). Intre doua noduri adiacente vom 
+adauga o muchie cu costul 0 daca nodurile au aceeasi directie si cu cost 1 
+daca au directii diferite. Astfel, problema se reduce la determinarea 
+distantei minime intre doua noduri intr-un graf cu muchii de cost cel mult 1. 
+Aceasta poate fi calculata folosind 0-1 BFS (cand intalnim o muchie de cost 0 
+nodul corespunzator se adauga la inceputul cozii, iar cand intalnim o muchie 
+de cost 1 nodul corespunzator se adauga la finalul cozii). 
+Complexitatea finala: O(N + M)
+
+
+
+4. Curse(Sortare topologica)
+
+Vom construi un graf al performantelor masinilor (graf orientat) in urmatorul 
+mod: Fie a[i][j] masina folosita pe pista i la antrenamentul j si a[i + 1][j] 
+masina folosita pe pista i + 1 la antrenamentul j. Va exista un arc de la 
+masina a[i][j] la masina a[i + 1][j] daca si numai daca a[i][k] = a[i + 1][k], 
+oricare ar fi 1 <= k < j. Graful obtinut va avea cel mult M noduri si A muchii. 
+Constructia grafului se poate realiza in timp O(N * A). Sortarea topologica a 
+acestui graf reprezinta solutia problemei. Aceasta poate fi realizata in O(M + A). 
+Complexitatea finala: O(N * A + M + A).

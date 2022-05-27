@@ -1,0 +1,71 @@
+IORDACHE MADALINA GABRIELA 323CA
+
+TEMA1 PA
+
+1. GIGEL SI TABELELE WALSH
+
+Metoda: Divide et Impera
+Vom defini o functie walsh(x, y, sz, value) care va returna valoarea elementului
+ de la pozitia (x, y) dintr-o matrice walsh de dimensiune sz. La fiecare pas vom
+ imparti matricea in 4 submatrici si vom reduce problema la o problema asemanatoare
+ intr-o matrice de dimensiune sz / 2. La fiecare pas se vor transforma coordonatele 
+(x,y) in functie de submatricea in care se afla elementul cautat. Daca elementul 
+cautat se afla in submatricea de jos value devine 1 - value. Algoritmul se incheie
+ cand sz = 1. Complexitatea pentru a raspunde la un query
+ este O(log(N)) => complexitatea finala O(K*log(N)).
+
+2. GIGEL SI CUVINTELE CRIPTATE
+
+Metoda: Greedy
+
+Vom determina pentru fiecare litera din alfabet care este numarul maxim de cuvinte
+ care pot fi concatenate astfel incat litera respectiva sa fie majoritara. 
+Vom descrie procedeul pentru o litera fixata (o vom nota X). 
+Definim d[i] = 2 * numarul de aparitii ale literei X - lungime
+ sirului de pe pozitia i. Sortam sirul d descrescator, iar raspunsul
+ problemei este pozitia k maxima astfel incat d[1] + d[2] + ... + d[k] > 0. 
+Complexitatea este O(SIGMA * N * log(N)), unde SIGMA este dimensiunea alfabetului.
+ In cazul problemei noastre, SIGMA = 26.
+
+3. GIGEL SI PRINEL
+
+Metoda: Programare dinamica
+
+Consideram d[i] = numarul minim de pasi pentru a ajunge de la 1 la i folosind procedeul 
+descris in enunt. Pentru calculul acestui vector se poate folosi metoda programarii 
+dinamice in urmatorul mod d[i + x] = min(d[i + x], d[i] + 1), unde x este un divizor
+ al lui i. Calcului acestui vector se poate face in O(MAX * SQRT(MAX)), unde 
+MAX = elementul maxim din vectorul target (10^5). Avand acest sir, vom transforma
+ target[i] in d[target[i]], iar problema noastra se reduce la a determina o submultime
+ de elemente pentru care suma d-urilor sa fie <= K si suma p-urilor sa fie maxima. 
+Acest lucru se poate face cu o dinamica aseamanatore cu cea de la problema rucsacului,
+ rezultand o complexitate d O(N*K).
+
+4. GIGEL SI CHEIA DE LA PORTOFEL
+
+Metoda: Programare dinamica
+
+Vom nota cu K[i...j] = subsecventa din sirul K care incepe la pozitia i si se termina
+ la pozitia j (K[i]K[i+1]...K[j]). Analog si pentru S si cu NR = numarul de caractere
+ distincte din S.
+Definim dp[i][j] = numarul de aparitii ale S[1...j] in K[1...i]. Raspunsul problemei
+ noastre se afla in dp[N][L]. Pentru a completa aceasta matrice avem urmatoarele cazuri:
+a) K[i] = ? => dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j] * NR
+b) K[i] = S[j] => dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j]
+c) K[i] != S[j] => dp[i][j] = dp[i - 1][j]
+
+Complexitatea este O(N*L).
+
+5. GIGEL REGELE COMERTULUI
+
+Metode: Programare dinamica + cautare binara
+
+Vom defini dp[i][j] = numarul maxim de negustori folositi pentru a activa j orase din
+ primele i, ultimul oras activat fiind orasul i. 
+dp[i][j] = max dp[k][j - 1] + cost(k, i) cu k de la 1 la i - 1, iar
+ cost(k, i) = costul de activare al oraselor k si i. 
+Daca k = i - 1 atunci cost(k, i) = coord[i + 1] - coord[i], altfel cost(k, i) = coord[i + 1] - coord[i - 1].
+ Calculul acestei matrici se poate face in O(N^2) tinand un maxim pe coloane in matricea dp. 
+Consideram smax[i] = valoarea maxima de pe coloana i in matricea dp. Acest lucru reprezinta
+ numarul maxim de negustori pentru a activa i orase. Se poate observa ca sirul smax este crescator, 
+astfel putem cauta binar X-ul maxim pentru care smax[X] <= M. Complexitate O(N^2 + Q*log(N)).
